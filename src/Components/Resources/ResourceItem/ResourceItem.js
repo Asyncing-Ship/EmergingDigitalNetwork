@@ -92,9 +92,9 @@ class ResourceItem extends Component {
 
     const likeOrupvotes = () => {
       if (this.state.upvotes === 1) {
-        return "Like";
+        return "Upvote";
       } else {
-        return "upvotes";
+        return "Upvotes";
       }
     };
 
@@ -172,8 +172,8 @@ class ResourceItem extends Component {
                           borderWidth={1}
                           borderRadius="lg"
                           px={2}
-                          width="full"
-                          maxWidth="90%"
+                          width="half"
+                          maxWidth="60%"
                           boxShadow="lg"
                           p={1}
                           py={1}
@@ -221,8 +221,12 @@ class ResourceItem extends Component {
               {this.props.resourceItem.title}
             </Heading>
             <Text>{this.props.resourceItem.body}</Text>
-            <Text>{this.props.resourceItem.upvote_count} upvotes</Text>
-            <Text>{this.state.comments.comments.length} Comments</Text>
+            <Text>
+              {this.state.upvotes} {likeOrupvotes()}
+            </Text>
+            <Text>
+              {this.state.comments.comments.length} {commentOrcomments()}
+            </Text>
             <Button
               variantColor={PRIMARY_COLOR}
               m={1}
@@ -247,8 +251,8 @@ class ResourceItem extends Component {
                           borderWidth={1}
                           borderRadius="lg"
                           px={2}
-                          width="full"
-                          maxWidth="90%"
+                          width="half"
+                          maxWidth="60%"
                           boxShadow="lg"
                           p={1}
                           py={1}

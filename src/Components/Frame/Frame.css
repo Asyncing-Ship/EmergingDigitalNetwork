@@ -3,7 +3,7 @@
   position: fixed;
   width: 100%;
   height: 50%;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.01);
   z-index: -2;
 }
 
@@ -12,7 +12,7 @@
   position: fixed;
   width: 100%;
   height: 50%;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.01);
   z-index: -2;
 }
 
@@ -21,7 +21,7 @@
   position: fixed;
   height: 100%;
   width: 50%;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.01);
   z-index: -2;
 }
 
@@ -30,10 +30,10 @@
   position: fixed;
   height: 100%;
   width: 50%;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.01);
   z-index: -2;
 }
 
 .frame {
-  box-shadow: 1px 1px 100px 50px rgba(83, 0, 138, 0.133);
+  box-shadow: 1px 1px 100px 50px rgba(83, 0, 138, 0.033);
 }

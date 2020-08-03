@@ -31,7 +31,7 @@ class Resources extends Component {
             <Stack>
               {this.props.resources.resources.map((resourceItem) => {
                 return (
-                  <Box width="80%" alignItems="center" m="auto" mt={2}>
+                  <Box width="70%" alignItems="center" m="auto" mt={2}>
                     <ResourceItem
                       key={resourceItem.id}
                       resourceItem={resourceItem}
