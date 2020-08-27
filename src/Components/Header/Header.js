@@ -6,13 +6,15 @@ import "./Header.css";
 import ThemeSelector from "../ThemeSelector/ThemeSelector";
 import { Box } from "@chakra-ui/core";
 import RightSibebar from "../Sidebars/RightSibebar";
-
+import Logo from "./EDN.png";
 const Nav = (props) => (
   <Box boxShadow="lg">
     <div className="nav">
       <div className="header">
         <Link to="/home">
-          <h1 className="nav-title">Emerging Digital Network</h1>
+          <h1 className="nav-title">
+            <img src={Logo} width={"100rem"} />
+          </h1>
         </Link>
         <div className="nav-right">
           <ThemeSelector />
