@@ -48,3 +48,16 @@ router.post("/logout", (req, res) => {
 });
 
 module.exports = router;
+
+// // [
+// //   check("email").isEmail().normalizeEmail(),
+// //   check("password").isLength({ mind: 6 }),
+// // ],
+// (req, res, next) => {
+//   console.log("user is attempting to register!")
+//   // const errors = validationResult(req);
+//   // if (errors.isEmpty()) {
+//   //   console.log('Email is: ', req.body.email),
+//   //   console.log(errors);
+//   //   return res.sendStatus(422).json({ errors: errors.array() });
+//   // }
