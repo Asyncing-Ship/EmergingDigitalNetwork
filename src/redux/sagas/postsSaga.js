@@ -23,6 +23,7 @@ function* addPost(action) {
   // dispatch the result with put!
   try {
     yield Axios.post("/api/posts", action.payload);
+    yield put({ type: "FETCH_POSTS" });
   } catch (error) {
     // console.log('Error fetching Posts', error);
     alert("unable to add new Post to server");
@@ -36,6 +37,7 @@ function* deletePost(action) {
   // dispatch the result with put!
   try {
     yield Axios.delete(`/api/posts/${action.payload}`);
+    yield put({ type: "FETCH_POSTS" });
   } catch (error) {
     // console.log('Error fetching Posts', error);
     alert("unable to delete Post from server");
@@ -75,6 +77,7 @@ function* updatePost(action) {
   //Update the post
   try {
     yield Axios.put(`/api/posts/${action.payload.currentId}`, action.payload);
+    yield put({ type: "FETCH_POSTS" });
   } catch (error) {
     alert("Unable to update Post on server", error);
   }

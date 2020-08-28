@@ -20,10 +20,7 @@ router.put("/posts", (req, res) => {
   console.log("adding post like to the database", req.body.id);
   const resourceID = req.body.id;
   const queryText = `INSERT INTO "post_likes" (user_id, post_id)
-    VALUES( $1, $2)
-    ON CONFLICT (user_id, post_id)
-     DELETE
-    WHERE user_id =$1, post_id=$2;`;
+    VALUES( $1, $2);`;
   pool
     .query(queryText, [req.user.id, resourceID])
     .then((response) => {
