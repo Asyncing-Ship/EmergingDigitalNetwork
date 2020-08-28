@@ -19,11 +19,10 @@ router.put("/resources", (req, res) => {
 router.put("/posts", (req, res) => {
   console.log("adding post like to the database", req.body.id);
   const resourceID = [req.body.id];
-  const queryText = `UPDATE posts 
-      SET likes = likes + 1
-    WHERE "id" = $1`;
+  const queryText = `INSERT INTO "post_likes"(user_id, post_id)
+    VALUE( $1, $2);`;
   pool
-    .query(queryText, resourceID)
+    .query(queryText, [req.user.id, resourceID])
     .then((response) => {
       console.log("like added to post on database", response);
       res.sendStatus(203);
