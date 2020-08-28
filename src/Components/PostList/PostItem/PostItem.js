@@ -11,6 +11,8 @@ import {
   IconButton,
   Stack,
   Link,
+  Input,
+  FormControl,
 } from "@chakra-ui/core";
 import AddComment from "../../Comment/AddComment";
 import Axios from "axios";
@@ -21,22 +23,15 @@ class PostItem extends Component {
     comments: {
       comments: 0,
     },
+    postTitle: "",
+    postBody: "",
     likes: 0,
-
+    editMode: false,
     displayThread: false,
   };
-
   componentDidMount() {
     this.updateComments();
-    this.updateLikes();
   }
-
-  updateLikes = () => {
-    this.setState({
-      likes: this.props.postItem.likes,
-    });
-  };
-
   updateComments = () => {
     Axios.get(`api/posts/comments/${this.props.postItem.id}`)
       .then((result) => {
@@ -47,7 +42,6 @@ class PostItem extends Component {
       })
       .catch((error) => console.log("error getting comments", error));
   };
-
   switchDisplay = () => {
     if (this.state.displayThread === true) {
       this.setState({ displayThread: false });
@@ -96,7 +90,7 @@ class PostItem extends Component {
     };
 
     const likeOrLikes = () => {
-      if (this.state.likes === 1) {
+      if (this.props.postItem.likes === 1) {
         return "Like";
       } else {
         return "Likes";
@@ -128,46 +122,111 @@ class PostItem extends Component {
             className="dark"
           >
             {/* <div className="postItem"> */}
-            <Heading as="h3" size="lg" mb={2}>
-              {this.props.postItem.post_title}
-            </Heading>
-            <Text>By</Text>
-            <Heading mb={2} as="h5" size="sm">
-              {this.props.postItem.first_name}
-            </Heading>
-            <Text mb={8}>{this.props.postItem.post_body}</Text>
+            {this.state.editMode === false ? (
+              <Box>
+                <Heading as="h3" size="lg" mb={2}>
+                  {this.props.postItem.post_title}
+                </Heading>
+                <Text>By</Text>
+                <Heading mb={2} as="h5" size="sm">
+                  {this.props.postItem.first_name}
+                </Heading>
+                <Text mb={8}>{this.props.postItem.post_body}</Text>
+              </Box>
+            ) : (
+              <Box>
+                <Input
+                  mb={2}
+                  placeholder="Title"
+                  value={this.state.postTitle}
+                  onChange={(event) =>
+                    this.setState({ postTitle: event.target.value })
+                  }
+                />
+                <Text>By</Text>
+                <Heading mb={2} as="h5" size="sm">
+                  {this.props.postItem.first_name}
+                </Heading>
+                <Input
+                  mb={8}
+                  placeholder="Body"
+                  value={this.state.postBody}
+                  onChange={(event) =>
+                    this.setState({ postBody: event.target.value })
+                  }
+                />
+              </Box>
+            )}
             <Stack isInline width="full" justifyContent="center">
               <Text p={2}>
-                {this.state.likes} {likeOrLikes()}
+                {this.props.postItem.likes || 0} {likeOrLikes()}
               </Text>
               <Text p={2}>
                 {this.state.comments.comments.length} {commentOrcomments()}
               </Text>
             </Stack>
-            <Button
-              variantColor={PRIMARY_COLOR}
-              m={1}
-              id={this.props.postItem.id}
-              onClick={this.addPostLike}
-            >
-              Like
-            </Button>
-            <Button
-              variantColor={PRIMARY_COLOR}
-              m={1}
-              id={this.props.postItem.id}
-              onClick={this.editPost}
-            >
-              Edit
-            </Button>
-            <Button
-              variantColor={PRIMARY_COLOR}
-              m={1}
-              id={this.props.postItem.id}
-              onClick={this.deletePost}
-            >
-              Delete
-            </Button>
+            {console.log(this.props.postItem)}
+            {!this.state.editMode ? (
+              <Box>
+                <Button
+                  variantColor={PRIMARY_COLOR}
+                  m={1}
+                  id={this.props.postItem.id}
+                  onClick={this.addPostLike}
+                >
+                  Like
+                </Button>
+                <Button
+                  variantColor={PRIMARY_COLOR}
+                  m={1}
+                  id={this.props.postItem.id}
+                  onClick={() => this.setState({ editMode: true })}
+                >
+                  Edit
+                </Button>
+                <Button
+                  variantColor={PRIMARY_COLOR}
+                  m={1}
+                  id={this.props.postItem.id}
+                  onClick={this.deletePost}
+                >
+                  Delete
+                </Button>
+              </Box>
+            ) : (
+              <Box>
+                <Button
+                  variantColor={PRIMARY_COLOR}
+                  onClick={() => {
+                    this.props.dispatch({
+                      type: "UPDATE_POST",
+                      payload: {
+                        currentId: this.props.postItem.id,
+                        post_title: this.state.postTitle,
+                        post_body: this.state.postBody,
+                      },
+                    });
+                    this.setState({
+                      editMode: false,
+                      postTitle: "",
+                      postBody: "",
+                    });
+                  }}
+                ></Button>
+                <Button
+                  variantColor="red"
+                  onClick={() =>
+                    this.setState({
+                      editMode: false,
+                      postTitle: "",
+                      postBody: "",
+                    })
+                  }
+                >
+                  Cancel
+                </Button>
+              </Box>
+            )}
             <br />
             <br />
             <Link pt={4} onClick={this.switchDisplay}>
@@ -260,7 +319,7 @@ class PostItem extends Component {
               {viewOrClose()}
             </Link>
 
-            {this.state.displayThread ? (
+            {this.state.displayThread && (
               <>
                 <Box>
                   {this.state.comments.comments.map((comment) => {
@@ -294,8 +353,6 @@ class PostItem extends Component {
                   userID={this.props.user.id}
                 />
               </>
-            ) : (
-              <></>
             )}
           </Box>
         </Flex>

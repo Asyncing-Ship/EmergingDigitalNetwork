@@ -26,7 +26,6 @@ CREATE TABLE "posts" (
 );
 
 
-
 CREATE TABLE "resources" (
 	"id" serial NOT NULL,
 	"user_id" integer NOT NULL,
@@ -39,7 +38,14 @@ CREATE TABLE "resources" (
   OIDS=FALSE
 );
 
+CREATE TABLE "post_likes"{
+	"id" serial primary key,
+	"user_id" integer not null,
+	"post_id" integer not null,
 
+} WITH (
+  OIDS=FALSE
+);
 
 CREATE TABLE "post_comments" (
 	"id" serial NOT NULL,
@@ -88,19 +94,24 @@ CREATE TABLE "resource_comments" (
 
 
 
-ALTER TABLE "posts" ADD CONSTRAINT "posts_user_id" FOREIGN KEY ("user_id") REFERENCES "users"("id");
+ALTER TABLE "posts" ADD CONSTRAINT "posts_user_id" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE;
 
-ALTER TABLE "resources" ADD CONSTRAINT "resources_user_id" FOREIGN KEY ("user_id") REFERENCES "users"("id");
+ALTER TABLE "post_likes" ADD CONSTRAINT "post_likes_user_id" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE;
+ALTER TABLE "post_likes" ADD CONSTRAINT "post_likes_post_id" FOREIGN KEY ("post_id") REFERENCES "posts"("id") ON DELETE CASCADE;
+ALTER TABLE "post_likes" ADD CONSTRAINT "post_likes_post_id_user_id" UNIQUE("user_id", "post_id");
 
-ALTER TABLE "post_comments" ADD CONSTRAINT "post_comments_user_id" FOREIGN KEY ("user_id") REFERENCES "users"("id");
-ALTER TABLE "post_comments" ADD CONSTRAINT "post_comments_post_id" FOREIGN KEY ("post_id") REFERENCES "posts"("id");
 
-ALTER TABLE "profile" ADD CONSTRAINT "profile_user_id" FOREIGN KEY ("user_id") REFERENCES "users"("id");
+ALTER TABLE "resources" ADD CONSTRAINT "resources_user_id" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE;
 
-ALTER TABLE "social_links" ADD CONSTRAINT "social_links_user_id" FOREIGN KEY ("user_id") REFERENCES "users"("id");
+ALTER TABLE "post_comments" ADD CONSTRAINT "post_comments_user_id" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE;
+ALTER TABLE "post_comments" ADD CONSTRAINT "post_comments_post_id" FOREIGN KEY ("post_id") REFERENCES "posts"("id") ON DELETE CASCADE;
 
-ALTER TABLE "resource_comments" ADD CONSTRAINT "resource_comments_user_id" FOREIGN KEY ("user_id") REFERENCES "users"("id");
-ALTER TABLE "resource_comments" ADD CONSTRAINT "resource_comments_resource_id" FOREIGN KEY ("resource_id") REFERENCES "resources"("id");
+ALTER TABLE "profile" ADD CONSTRAINT "profile_user_id" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE;
+
+ALTER TABLE "social_links" ADD CONSTRAINT "social_links_user_id" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE;
+
+ALTER TABLE "resource_comments" ADD CONSTRAINT "resource_comments_user_id" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE;
+ALTER TABLE "resource_comments" ADD CONSTRAINT "resource_comments_resource_id" FOREIGN KEY ("resource_id") REFERENCES "resources"("id") ON DELETE CASCADE;
 
 
 
