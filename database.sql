@@ -16,6 +16,7 @@ CREATE TABLE "posts" (
 	"post_title" varchar(255) NOT NULL,
 	"post_body" varchar(2000) NOT NULL,
 	"user_id" integer NOT NULL,
+	"likes" integer NOT NULL,
 	CONSTRAINT "posts_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE

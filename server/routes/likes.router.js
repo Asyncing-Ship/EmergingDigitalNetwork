@@ -17,16 +17,17 @@ router.put("/resources", (req, res) => {
 });
 
 router.put("/posts", (req, res) => {
-  console.log("adding resource like to the database", req.body.id);
+  console.log("adding post like to the database", req.body.id);
   const resourceID = [req.body.id];
   const queryText = `UPDATE posts 
       SET likes = likes + 1
     WHERE "id" = $1`;
   pool
     .query(queryText, resourceID)
-    .then((response) =>
-      console.log("like added to resource on database", response)
-    )
+    .then((response) => {
+      console.log("like added to post on database", response);
+      res.sendStatus(203);
+    })
     .catch((error) => console.log(error));
 });
 
