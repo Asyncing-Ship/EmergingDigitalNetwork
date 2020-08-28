@@ -94,6 +94,7 @@ function* fetchPostAuthor(action) {
 function* addPostLike(action) {
   try {
     yield Axios.put("api/likes/posts", action.payload);
+    yield put({ type: "FETCH_POSTS" });
   } catch (error) {
     alert("unable to add post like to server");
   }

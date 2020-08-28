@@ -96,7 +96,7 @@ class PostItem extends Component {
     };
 
     const likeOrLikes = () => {
-      if (this.state.likes === 1) {
+      if (this.props.postItem.likes === 1) {
         return "Like";
       } else {
         return "Likes";
@@ -138,7 +138,7 @@ class PostItem extends Component {
             <Text mb={8}>{this.props.postItem.post_body}</Text>
             <Stack isInline width="full" justifyContent="center">
               <Text p={2}>
-                {this.state.likes} {likeOrLikes()}
+                {this.props.postItem.likes || 0} {likeOrLikes()}
               </Text>
               <Text p={2}>
                 {this.state.comments.comments.length} {commentOrcomments()}

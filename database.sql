@@ -88,19 +88,19 @@ CREATE TABLE "resource_comments" (
 
 
 
-ALTER TABLE "posts" ADD CONSTRAINT "posts_user_id" FOREIGN KEY ("user_id") REFERENCES "users"("id");
+ALTER TABLE "posts" ADD CONSTRAINT "posts_user_id" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE;
 
-ALTER TABLE "resources" ADD CONSTRAINT "resources_user_id" FOREIGN KEY ("user_id") REFERENCES "users"("id");
+ALTER TABLE "resources" ADD CONSTRAINT "resources_user_id" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE;
 
-ALTER TABLE "post_comments" ADD CONSTRAINT "post_comments_user_id" FOREIGN KEY ("user_id") REFERENCES "users"("id");
-ALTER TABLE "post_comments" ADD CONSTRAINT "post_comments_post_id" FOREIGN KEY ("post_id") REFERENCES "posts"("id");
+ALTER TABLE "post_comments" ADD CONSTRAINT "post_comments_user_id" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE;
+ALTER TABLE "post_comments" ADD CONSTRAINT "post_comments_post_id" FOREIGN KEY ("post_id") REFERENCES "posts"("id") ON DELETE CASCADE;
 
-ALTER TABLE "profile" ADD CONSTRAINT "profile_user_id" FOREIGN KEY ("user_id") REFERENCES "users"("id");
+ALTER TABLE "profile" ADD CONSTRAINT "profile_user_id" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE;
 
-ALTER TABLE "social_links" ADD CONSTRAINT "social_links_user_id" FOREIGN KEY ("user_id") REFERENCES "users"("id");
+ALTER TABLE "social_links" ADD CONSTRAINT "social_links_user_id" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE;
 
-ALTER TABLE "resource_comments" ADD CONSTRAINT "resource_comments_user_id" FOREIGN KEY ("user_id") REFERENCES "users"("id");
-ALTER TABLE "resource_comments" ADD CONSTRAINT "resource_comments_resource_id" FOREIGN KEY ("resource_id") REFERENCES "resources"("id");
+ALTER TABLE "resource_comments" ADD CONSTRAINT "resource_comments_user_id" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE;
+ALTER TABLE "resource_comments" ADD CONSTRAINT "resource_comments_resource_id" FOREIGN KEY ("resource_id") REFERENCES "resources"("id") ON DELETE CASCADE;
 
 
 
