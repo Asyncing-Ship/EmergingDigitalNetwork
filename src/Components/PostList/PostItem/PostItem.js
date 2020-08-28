@@ -125,6 +125,7 @@ class PostItem extends Component {
             boxShadow="lg"
             p={4}
             py={8}
+            className="dark"
           >
             {/* <div className="postItem"> */}
             <Heading as="h3" size="lg" mb={2}>

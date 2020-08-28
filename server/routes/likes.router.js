@@ -24,9 +24,10 @@ router.put("/posts", (req, res) => {
     WHERE "id" = $1`;
   pool
     .query(queryText, resourceID)
-    .then((response) =>
-      console.log("like added to resource on database", response)
-    )
+    .then((response) => {
+      console.log("like added to post on database", response);
+      res.sendStatus(203);
+    })
     .catch((error) => console.log(error));
 });
 
