@@ -32,7 +32,7 @@ if (process.env.DATABASE_URL) {
     password: "postgres",
     host: "localhost", // Server hosting the postgres database
     port: 5432, // env var: PGPORT
-    database: "emerging_digital_network_develop", // Database name
+    database: "emerging_digital_network", // Database name
     max: 10, // max number of clients in the pool
     idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
   };
