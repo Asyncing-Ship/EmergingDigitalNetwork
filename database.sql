@@ -10,13 +10,16 @@ CREATE TABLE "users" (
 );
 
 
+INSERT into "users" ("first_name", "last_name", "email", "password")
+VALUES ('That', 'Guy', 'thatguy@email.com', 'nopass');
+
 
 CREATE TABLE "posts" (
 	"id" serial NOT NULL,
 	"post_title" varchar(255) NOT NULL,
 	"post_body" varchar(2000) NOT NULL,
 	"user_id" integer NOT NULL,
-	"likes" integer NOT NULL,
+	"likes" integer DEFAULT 0,
 	CONSTRAINT "posts_pk" PRIMARY KEY ("id")
 ) WITH (
   OIDS=FALSE
@@ -103,3 +106,4 @@ ALTER TABLE "resource_comments" ADD CONSTRAINT "resource_comments_resource_id" F
 
 INSERT into "posts" ("post_title", "post_body", "user_id")
 VALUES ('This is a Post', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium laboriosam eaque, inventore explicabo maiores velit, maxime voluptatem quibusdam, nobis rem consectetur. Est ipsum, nulla sint officiis vitae nihil porro illum?', 1)
+
