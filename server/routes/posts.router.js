@@ -14,14 +14,15 @@ const {
  */
 router.get("/", (req, res) => {
   console.log("getting posts");
-  const queryText = `SELECT first_name, last_name, email, posts.id, posts.post_title, posts.post_body, count(post_likes.id) as likes, posts.user_id FROM users
-  JOIN posts ON posts.user_id = users.id
-  JOIN post_likes ON post_likes.post_id = posts.id
-  GROUP BY users.first_name, users.last_name, users.email, posts.id, posts.post_title, posts.post_body, posts.user_id
+  const queryText = `SELECT users.first_name, users.last_name, users.email, posts.id, posts.post_title, posts.post_body, count(post_likes.user_id) as likes, posts.user_id FROM posts
+  JOIN users ON posts.user_id = users.id
+  LEFT JOIN post_likes ON post_likes.post_id = posts.id
+  GROUP BY users.first_name, users.last_name, users.email, posts.id
   ORDER BY posts.id DESC`;
   pool
     .query(queryText)
     .then((result) => {
+      console.log(result);
       res.send(result.rows);
     })
     .catch((error) => {
