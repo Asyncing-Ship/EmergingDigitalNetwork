@@ -17,7 +17,7 @@ router.get("/", (req, res) => {
   const queryText = `SELECT first_name, last_name, email, posts.id, posts.post_title, posts.post_body, count(post_likes.id) as likes, posts.user_id FROM users
   JOIN posts ON posts.user_id = users.id
   JOIN post_likes ON post_likes.post_id = posts.id
-  GROUP BY users.first_name, users.last_name, users.email, posts.id, posts.post_title
+  GROUP BY users.first_name, users.last_name, users.email, posts.id, posts.post_title, posts.post_body, posts.user_id
   ORDER BY posts.id DESC`;
   pool
     .query(queryText)
