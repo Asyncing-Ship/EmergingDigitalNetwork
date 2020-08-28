@@ -24,6 +24,7 @@ class PostItem extends Component {
       comments: 0,
     },
     postTitle: "",
+    postBody: "",
     likes: 0,
     editMode: false,
     displayThread: false,
@@ -122,12 +123,26 @@ class PostItem extends Component {
               </Box>
             ) : (
               <Box>
-                <Input mb={2} />
+                <Input
+                  mb={2}
+                  placeholder="Title"
+                  value={this.state.postTitle}
+                  onChange={(event) =>
+                    this.setState({ postTitle: event.target.value })
+                  }
+                />
                 <Text>By</Text>
                 <Heading mb={2} as="h5" size="sm">
                   {this.props.postItem.first_name}
                 </Heading>
-                <Input mb={8} />
+                <Input
+                  mb={8}
+                  placeholder="Body"
+                  value={this.state.postBody}
+                  onChange={(event) =>
+                    this.setState({ postBody: event.target.value })
+                  }
+                />
               </Box>
             )}
             <Stack isInline width="full" justifyContent="center">
@@ -138,30 +153,68 @@ class PostItem extends Component {
                 {this.state.comments.comments.length} {commentOrcomments()}
               </Text>
             </Stack>
-            <Button
-              variantColor={PRIMARY_COLOR}
-              m={1}
-              id={this.props.postItem.id}
-              onClick={this.addPostLike}
-            >
-              Like
-            </Button>
-            <Button
-              variantColor={PRIMARY_COLOR}
-              m={1}
-              id={this.props.postItem.id}
-              onClick={() => this.setState({ editMode: true })}
-            >
-              Edit
-            </Button>
-            <Button
-              variantColor={PRIMARY_COLOR}
-              m={1}
-              id={this.props.postItem.id}
-              onClick={this.deletePost}
-            >
-              Delete
-            </Button>
+            {console.log(this.props.postItem)}
+            {!this.state.editMode ? (
+              <Box>
+                <Button
+                  variantColor={PRIMARY_COLOR}
+                  m={1}
+                  id={this.props.postItem.id}
+                  onClick={this.addPostLike}
+                >
+                  Like
+                </Button>
+                <Button
+                  variantColor={PRIMARY_COLOR}
+                  m={1}
+                  id={this.props.postItem.id}
+                  onClick={() => this.setState({ editMode: true })}
+                >
+                  Edit
+                </Button>
+                <Button
+                  variantColor={PRIMARY_COLOR}
+                  m={1}
+                  id={this.props.postItem.id}
+                  onClick={this.deletePost}
+                >
+                  Delete
+                </Button>
+              </Box>
+            ) : (
+              <Box>
+                <Button
+                  variantColor={PRIMARY_COLOR}
+                  onClick={() => {
+                    this.props.dispatch({
+                      type: "UPDATE_POST",
+                      payload: {
+                        currentId: this.props.postItem.id,
+                        post_title: this.state.postTitle,
+                        post_body: this.state.postBody,
+                      },
+                    });
+                    this.setState({
+                      editMode: false,
+                      postTitle: "",
+                      postBody: "",
+                    });
+                  }}
+                ></Button>
+                <Button
+                  variantColor="red"
+                  onClick={() =>
+                    this.setState({
+                      editMode: false,
+                      postTitle: "",
+                      postBody: "",
+                    })
+                  }
+                >
+                  Cancel
+                </Button>
+              </Box>
+            )}
             <br />
             <br />
             <Link pt={4} onClick={this.switchDisplay}>
