@@ -20,10 +20,10 @@ class AddComment extends Component {
     });
   };
 
-  handleComment = (event) => {
+  handleComment = async (event) => {
     event.preventDefault();
     if (this.props.postItem.post_body !== undefined) {
-      this.props.dispatch({
+      await this.props.dispatch({
         type: "SUBMIT_POST_COMMENT",
         payload: this.state.comment,
       });

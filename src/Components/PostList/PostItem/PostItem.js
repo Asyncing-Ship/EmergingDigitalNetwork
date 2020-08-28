@@ -29,7 +29,19 @@ class PostItem extends Component {
     editMode: false,
     displayThread: false,
   };
-
+  componentDidMount() {
+    this.updateComments();
+  }
+  updateComments = () => {
+    Axios.get(`api/posts/comments/${this.props.postItem.id}`)
+      .then((result) => {
+        console.table(result.data);
+        this.setState({
+          comments: { comments: result.data },
+        });
+      })
+      .catch((error) => console.log("error getting comments", error));
+  };
   switchDisplay = () => {
     if (this.state.displayThread === true) {
       this.setState({ displayThread: false });
@@ -307,7 +319,7 @@ class PostItem extends Component {
               {viewOrClose()}
             </Link>
 
-            {this.state.displayThread ? (
+            {this.state.displayThread && (
               <>
                 <Box>
                   {this.state.comments.comments.map((comment) => {
@@ -341,8 +353,6 @@ class PostItem extends Component {
                   userID={this.props.user.id}
                 />
               </>
-            ) : (
-              <></>
             )}
           </Box>
         </Flex>
