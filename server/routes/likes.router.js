@@ -17,7 +17,7 @@ router.put("/resources", (req, res) => {
 });
 
 router.put("/posts", (req, res) => {
-  console.log("adding resource like to the database", req.body.id);
+  console.log("adding post like to the database", req.body.id);
   const resourceID = [req.body.id];
   const queryText = `UPDATE posts 
       SET likes = likes + 1
