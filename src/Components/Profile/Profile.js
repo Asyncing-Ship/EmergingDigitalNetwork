@@ -35,21 +35,34 @@ class Profile extends Component {
 
   render() {
     const { user, profile, profileData, profileLinks } = this.props;
+    if (!profileData) {
+      this.props.dispatch({ type: "ADD_PROFILE" });
+    }
     return (
       <div className="content">
-        <Heading className="profile">
-          {user.first_name} {user.last_name}
-        </Heading>
-        <Button variantColor={VARIANT_COLOR} mb={4} onClick={this.editProfile}>
-          Edit Profile
-        </Button>
-        <p className="profile">{profileData.bio}</p>
-        {profileLinks.map((profileLink) => {
-          return <ProfileLink key={profileLink.id} profileLink={profileLink} />;
-        })}
-        {profile.profilePosts.map((postItem) => {
-          return <PostItem key={postItem.id} postItem={postItem} />;
-        })}
+        <div>
+          <Heading className="profile">
+            {user.first_name} {user.last_name}
+          </Heading>
+          <Button
+            variantColor={VARIANT_COLOR}
+            mb={4}
+            onClick={this.editProfile}
+          >
+            Edit Profile
+          </Button>
+          <p className="profile">
+            {profileData ? profileData.bio : "ERROR: COULD NOT GET BIO"}{" "}
+          </p>
+          {profileLinks.map((profileLink) => {
+            return (
+              <ProfileLink key={profileLink.id} profileLink={profileLink} />
+            );
+          })}
+          {profile.profilePosts.map((postItem) => {
+            return <PostItem key={postItem.id} postItem={postItem} />;
+          })}
+        </div>
       </div>
     );
   }

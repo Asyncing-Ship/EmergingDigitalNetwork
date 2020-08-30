@@ -1,13 +1,19 @@
 import Axios from "axios";
 import { put, takeEvery } from "redux-saga/effects";
 
+function* addProfile(action) {
+  try {
+    yield Axios.post("/api/profile");
+    yield put({ type: "FETCH_PROFILE" });
+  } catch {}
+}
 // function to get Posts
 function* fetchProfile(action) {
   // wrap it all in try/catch
   // yield axios
   // dispatch the result with put!
   try {
-    const response = yield Axios.get(`/api/profile/`);
+    const response = yield Axios.get(`/api/profile`);
     // const result = yield call(axios.get, '/post');
     yield put({ type: "SET_PROFILE", payload: response.data });
   } catch (error) {
@@ -45,6 +51,7 @@ function* fetchUserPosts(action) {
 }
 
 function* profileSaga() {
+  yield takeEvery("ADD_PROFILE", addProfile);
   yield takeEvery("FETCH_PROFILE", fetchProfile);
   yield takeEvery("FETCH_USER_LINKS", fetchUserLinks);
   yield takeEvery("FETCH_USER_POSTS", fetchUserPosts);

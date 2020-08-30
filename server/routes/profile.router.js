@@ -9,13 +9,29 @@ const {
 /**
  * Get all of the posts on the table
  */
-router.get("/", (req, res) => {
-  console.log("getting profile");
+router.post("/", rejectUnauthenticated, (req, res) => {
   const user_id = req.user.id;
+  const queryText = `INSERT INTO profile(user_id, avatar, bio) VALUES ($1,$2,$3)`;
+  pool
+    .query(queryText, [user_id, "", "No Biography Yet"])
+    .then((result) => {
+      res.sendStatus(203);
+    })
+    .catch((error) => {
+      console.log(
+        "ERROR POSTING NEW PROFILE: profile.router.js LINE 14:",
+        error
+      );
+    });
+});
+router.get("/", (req, res) => {
+  const user_id = req.user.id;
+  console.log("getting profile", req.user, user_id);
   const queryText = `SELECT * FROM profile WHERE user_id = $1`;
   pool
     .query(queryText, [user_id])
     .then((result) => {
+      console.log(result.rows);
       res.send(result.rows);
     })
     .catch((error) => {
