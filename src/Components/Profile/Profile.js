@@ -245,9 +245,6 @@ class Profile extends Component {
               >
                 Cancel
               </Button>
-              <p className="profile">
-                {profileData ? profileData.bio : "ERROR: COULD NOT GET BIO"}{" "}
-              </p>
             </Box>
           )}
           <hr></hr>
