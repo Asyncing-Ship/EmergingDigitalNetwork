@@ -60,6 +60,7 @@ class Profile extends Component {
             );
           })}
           {profile.profilePosts.map((postItem) => {
+            console.log(postItem);
             return <PostItem key={postItem.id} postItem={postItem} />;
           })}
         </div>

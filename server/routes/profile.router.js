@@ -46,8 +46,12 @@ router.get("/", (req, res) => {
 router.get("/posts", (req, res) => {
   console.log("Getting user posts from database");
   const user_id = req.user.id;
-  const queryText = `
-    SELECT * FROM posts WHERE user_id = $1 ORDER BY id DESC`;
+  const queryText = `SELECT users.first_name, users.last_name, users.email, posts.id, posts.post_title, posts.post_body, count(post_likes.user_id) as likes, posts.user_id FROM posts
+  JOIN users ON posts.user_id = users.id
+  LEFT JOIN post_likes ON post_likes.post_id = posts.id 
+  WHERE posts.user_id = $1 
+  GROUP BY users.first_name, users.last_name, users.email, posts.id
+  ORDER BY id DESC`;
   pool
     .query(queryText, [user_id])
     .then((result) => {
