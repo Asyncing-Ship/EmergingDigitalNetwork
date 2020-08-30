@@ -22,22 +22,8 @@ class AddComment extends Component {
 
   handleComment = async (event) => {
     event.preventDefault();
-    if (this.props.postItem.post_body !== undefined) {
-      await this.props.dispatch({
-        type: "SUBMIT_POST_COMMENT",
-        payload: this.state.comment,
-      });
-    } else if (this.props.postItem.body !== undefined) {
-      console.log("Resource Route!");
-      this.props.dispatch({
-        type: "SUBMIT_RESOURCE_COMMENT",
-        payload: this.state.comment,
-      });
-    }
-    this.props.dispatch({ type: "FETCH_POSTS" });
-    this.setState({
-      comment: { body: "", id: null },
-    });
+    this.props.addComment(this.state.comment);
+    this.setState({ comment: { body: "", id: null } });
   };
   render() {
     return (
