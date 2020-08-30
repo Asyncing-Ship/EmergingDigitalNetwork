@@ -134,7 +134,8 @@ class PostItem extends Component {
                 </Heading>
                 <Text>By</Text>
                 <Heading mb={2} as="h5" size="sm">
-                  {this.props.postItem.first_name}
+                  {this.props.postItem.first_name}{" "}
+                  {this.props.postItem.last_name}
                 </Heading>
                 <Text mb={8}>{this.props.postItem.post_body}</Text>
               </Box>

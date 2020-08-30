@@ -2,12 +2,26 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import PostItem from "../PostList/PostItem/PostItem";
-import { Link, Heading, Button, Icon } from "@chakra-ui/core";
+import {
+  Link,
+  Heading,
+  Button,
+  Icon,
+  Input,
+  Textarea,
+  Flex,
+  Box,
+} from "@chakra-ui/core";
 import { VARIANT_COLOR } from "../ThemeSelector/ThemeSelector";
 import ProfileLink from "./ProfileLink/ProfileLink";
 
 class Profile extends Component {
-  state = {};
+  state = {
+    editMode: false,
+    first_name: "",
+    last_name: "",
+    bio: "",
+  };
 
   componentDidMount() {
     this.getProfile();
@@ -32,7 +46,14 @@ class Profile extends Component {
       type: "FETCH_USER_POSTS",
     });
   };
-
+  editProfile = () => {
+    this.setState({
+      editMode: true,
+      first_name: this.props.user.first_name,
+      last_name: this.props.user.last_name,
+      bio: this.props.profileData.bio,
+    });
+  };
   render() {
     const { user, profile, profileData, profileLinks } = this.props;
     if (!profileData) {
@@ -41,28 +62,100 @@ class Profile extends Component {
     return (
       <div className="content">
         <div>
-          <Heading className="profile">
-            {user.first_name} {user.last_name}
+          {!this.state.editMode ? (
+            <Box mb={8}>
+              <Heading className="profile">
+                {user.first_name} {user.last_name}
+              </Heading>
+              <Button
+                variantColor={VARIANT_COLOR}
+                mb={4}
+                onClick={this.editProfile}
+              >
+                Edit Profile
+              </Button>
+              <p className="profile">
+                {profileData ? profileData.bio : "ERROR: COULD NOT GET BIO"}{" "}
+              </p>
+            </Box>
+          ) : (
+            <Box mb={8}>
+              {" "}
+              <Box display="flex">
+                <Box flex={3}>
+                  <small>First Name</small>
+                  <Input
+                    className="profile"
+                    value={this.state.first_name}
+                    onChange={(event) =>
+                      this.setState({ first_name: event.target.value })
+                    }
+                  />
+                  <small>Last Name</small>
+                  <Input
+                    className="profile"
+                    value={this.state.last_name}
+                    onChange={(event) =>
+                      this.setState({ last_name: event.target.value })
+                    }
+                  />
+                  <small>Bio</small>
+                  <Textarea
+                    placeholder="Biography"
+                    className="profile"
+                    value={this.state.bio}
+                    onChange={(event) =>
+                      this.setState({ bio: event.target.value })
+                    }
+                  />
+                </Box>
+                <Box flex={2}>
+                  <small>Social Links</small>
+                  <Input></Input>
+                </Box>
+              </Box>
+              <Button
+                variantColor={VARIANT_COLOR}
+                mb={4}
+                onClick={this.saveEdits}
+              >
+                Save
+              </Button>
+              <Button
+                variantColor={VARIANT_COLOR}
+                mb={4}
+                onClick={() =>
+                  this.setState({
+                    editMode: false,
+                    first_name: "",
+                    last_name: "",
+                  })
+                }
+              >
+                Cancel
+              </Button>
+              <p className="profile">
+                {profileData ? profileData.bio : "ERROR: COULD NOT GET BIO"}{" "}
+              </p>
+            </Box>
+          )}
+          <hr></hr>
+          <Heading my={8}>
+            <u>Posts</u>
           </Heading>
-          <Button
-            variantColor={VARIANT_COLOR}
-            mb={4}
-            onClick={this.editProfile}
-          >
-            Edit Profile
-          </Button>
-          <p className="profile">
-            {profileData ? profileData.bio : "ERROR: COULD NOT GET BIO"}{" "}
-          </p>
           {profileLinks.map((profileLink) => {
             return (
               <ProfileLink key={profileLink.id} profileLink={profileLink} />
             );
           })}
-          {profile.profilePosts.map((postItem) => {
-            console.log(postItem);
-            return <PostItem key={postItem.id} postItem={postItem} />;
-          })}
+          {profile.profilePosts[0] ? (
+            profile.profilePosts.map((postItem) => {
+              console.log(postItem);
+              return <PostItem key={postItem.id} postItem={postItem} />;
+            })
+          ) : (
+            <div>This User Has No Posts Yet</div>
+          )}
         </div>
       </div>
     );
