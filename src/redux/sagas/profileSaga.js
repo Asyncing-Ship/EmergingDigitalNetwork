@@ -49,8 +49,15 @@ function* fetchUserPosts(action) {
     alert("unable to get user posts from server");
   }
 }
-
+function* editProfile(action) {
+  try {
+    yield Axios.put("/api/user/", action.payload.user);
+    yield Axios.put("/api/profile/", action.payload.profile);
+    yield put({ type: "FETCH_PROFILE" });
+  } catch (error) {}
+}
 function* profileSaga() {
+  yield takeEvery("EDIT_PROFILE", editProfile);
   yield takeEvery("ADD_PROFILE", addProfile);
   yield takeEvery("FETCH_PROFILE", fetchProfile);
   yield takeEvery("FETCH_USER_LINKS", fetchUserLinks);

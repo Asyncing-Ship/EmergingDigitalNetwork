@@ -54,6 +54,29 @@ class Profile extends Component {
       bio: this.props.profileData.bio,
     });
   };
+  saveEdits = () => {
+    console.log(this.props.profile);
+    this.props.dispatch({
+      type: "EDIT_PROFILE",
+      payload: {
+        user: {
+          id: this.props.profileData.user_id,
+          first_name: this.state.first_name,
+          last_name: this.state.last_name,
+        },
+        profile: {
+          id: this.props.profileData.user_id,
+          bio: this.state.bio,
+        },
+      },
+    });
+    this.setState({
+      editMode: false,
+      first_name: "",
+      last_name: "",
+      bio: "",
+    });
+  };
   render() {
     const { user, profile, profileData, profileLinks } = this.props;
     if (!profileData) {
@@ -117,7 +140,7 @@ class Profile extends Component {
               <Button
                 variantColor={VARIANT_COLOR}
                 mb={4}
-                onClick={this.saveEdits}
+                onClick={() => this.saveEdits()}
               >
                 Save
               </Button>
@@ -129,6 +152,7 @@ class Profile extends Component {
                     editMode: false,
                     first_name: "",
                     last_name: "",
+                    bio: "",
                   })
                 }
               >

@@ -72,6 +72,25 @@ router.get("/links", (req, res) => {
     })
     .catch((error) => console.log("Error getting user links", error));
 });
+router.put("/", rejectUnauthenticated, (req, res) => {
+  if (req.user.id === req.body.id) {
+    pool
+      .query(`UPDATE "profile" SET bio = $1 WHERE user_id=$2`, [
+        req.body.bio,
+        req.body.id,
+      ])
+      .then(() => {
+        console.log("successfully edited your profile");
+        res.send(202);
+      })
+      .catch((error) => {
+        console.log("ERROR in user router line 38:", error);
+        res.sendStatus(500);
+      });
+  } else {
+    res.sendStatus(403);
+  }
+});
 
 /**
  * Update an posts if it's something the logged in user added

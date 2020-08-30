@@ -5,6 +5,7 @@ const {
 const encryptLib = require("../modules/encryption");
 const pool = require("../modules/pool");
 const userStrategy = require("../strategies/user.strategy");
+const { restart } = require("nodemon");
 
 const router = express.Router();
 
@@ -30,6 +31,26 @@ router.post("/register", (req, res, next) => {
     .query(queryText, [first_name, last_name, email, password])
     .then(() => res.sendStatus(201))
     .catch(() => res.sendStatus(500));
+});
+router.put("/", rejectUnauthenticated, (req, res) => {
+  if (req.user.id === req.body.id) {
+    pool
+      .query(`UPDATE "users" SET first_name = $1, last_name = $2 WHERE id=$3`, [
+        req.body.first_name,
+        req.body.last_name,
+        req.body.id,
+      ])
+      .then(() => {
+        console.log("successfully edited your profile");
+        res.send(202);
+      })
+      .catch((error) => {
+        console.log("ERROR in user router line 38:", error);
+        res.sendStatus(500);
+      });
+  } else {
+    res.sendStatus(403);
+  }
 });
 
 // Handles login form authenticate/login POST
