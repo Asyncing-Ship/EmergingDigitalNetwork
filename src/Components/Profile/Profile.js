@@ -9,8 +9,9 @@ import {
   Icon,
   Input,
   Textarea,
-  Flex,
   Box,
+  ButtonGroup,
+  Select,
 } from "@chakra-ui/core";
 import { VARIANT_COLOR } from "../ThemeSelector/ThemeSelector";
 import ProfileLink from "./ProfileLink/ProfileLink";
@@ -49,8 +50,8 @@ class Profile extends Component {
   editProfile = () => {
     this.setState({
       editMode: true,
-      first_name: this.props.user.first_name,
-      last_name: this.props.user.last_name,
+      first_name: this.props.profileData.first_name,
+      last_name: this.props.profileData.last_name,
       bio: this.props.profileData.bio,
     });
   };
@@ -105,7 +106,7 @@ class Profile extends Component {
             <Box mb={8}>
               {" "}
               <Box display="flex">
-                <Box flex={3}>
+                <Box flex={2}>
                   <small>First Name</small>
                   <Input
                     className="profile"
@@ -132,9 +133,22 @@ class Profile extends Component {
                     }
                   />
                 </Box>
+                <Box flex={1}></Box>
                 <Box flex={2}>
                   <small>Social Links</small>
-                  <Input></Input>
+                  <Box display="flex">
+                    <Select flex={2} variant="outline">
+                      <option value="facebook">facebook</option>
+                      <option value="site">site</option>
+                      <option value="linkedin">linkedin</option>
+                      <option value="phone">phone</option>
+                      <option value="email">email</option>
+                      <option value="github">github</option>
+                      <option value="twitter">twitter</option>
+                      <option value="stream">Stream</option>
+                    </Select>
+                    <Input flex={5}></Input>
+                  </Box>
                 </Box>
               </Box>
               <Button
