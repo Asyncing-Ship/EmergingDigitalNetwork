@@ -12,9 +12,12 @@ import {
   Box,
   ButtonGroup,
   Select,
+  Text,
+  NumberInput,
 } from "@chakra-ui/core";
 import { VARIANT_COLOR } from "../ThemeSelector/ThemeSelector";
 import ProfileLink from "./ProfileLink/ProfileLink";
+import PhoneInput from "react-phone-number-input/input";
 
 class Profile extends Component {
   state = {
@@ -22,6 +25,13 @@ class Profile extends Component {
     first_name: "",
     last_name: "",
     bio: "",
+    facebook: "",
+    twitter: "",
+    github: "",
+    personal_site: "",
+    linkedin: "",
+    email: "",
+    phone: "",
   };
 
   componentDidMount() {
@@ -47,12 +57,24 @@ class Profile extends Component {
       type: "FETCH_USER_POSTS",
     });
   };
+  handleChangeFor = (event, value) => {
+    this.setState({
+      [value]: event.target.value,
+    });
+  };
   editProfile = () => {
     this.setState({
       editMode: true,
       first_name: this.props.profileData.first_name,
       last_name: this.props.profileData.last_name,
       bio: this.props.profileData.bio,
+      facebook: this.props.profileData.facebook,
+      twitter: this.props.profileData.twitter,
+      github: this.props.profileData.github,
+      personal_site: this.props.profileData.personal_site,
+      linkedin: this.props.profileData.linkedin,
+      email: this.props.profileData.email,
+      phone: this.props.profileData.phone,
     });
   };
   saveEdits = () => {
@@ -68,6 +90,13 @@ class Profile extends Component {
         profile: {
           id: this.props.profileData.user_id,
           bio: this.state.bio,
+          facebook: this.state.facebook,
+          twitter: this.state.twitter,
+          github: this.state.github,
+          personal_site: this.state.personal_site,
+          linkedin: this.state.linkedin,
+          email: this.state.email,
+          phone: this.state.phone,
         },
       },
     });
@@ -106,13 +135,16 @@ class Profile extends Component {
             <Box mb={8}>
               {" "}
               <Box display="flex">
-                <Box flex={2}>
+                <Box flex={4}>
+                  <Box mb={5}>
+                    <Text>Personal Info</Text>
+                  </Box>
                   <small>First Name</small>
                   <Input
                     className="profile"
                     value={this.state.first_name}
                     onChange={(event) =>
-                      this.setState({ first_name: event.target.value })
+                      this.handleChangeFor(event, "first_name")
                     }
                   />
                   <small>Last Name</small>
@@ -120,7 +152,7 @@ class Profile extends Component {
                     className="profile"
                     value={this.state.last_name}
                     onChange={(event) =>
-                      this.setState({ last_name: event.target.value })
+                      this.handleChangeFor(event, "last_name")
                     }
                   />
                   <small>Bio</small>
@@ -128,27 +160,68 @@ class Profile extends Component {
                     placeholder="Biography"
                     className="profile"
                     value={this.state.bio}
-                    onChange={(event) =>
-                      this.setState({ bio: event.target.value })
-                    }
+                    onChange={(event) => this.handleChangeFor(event, "bio")}
                   />
                 </Box>
                 <Box flex={1}></Box>
-                <Box flex={2}>
-                  <small>Social Links</small>
-                  <Box display="flex">
-                    <Select flex={2} variant="outline">
-                      <option value="facebook">facebook</option>
-                      <option value="site">site</option>
-                      <option value="linkedin">linkedin</option>
-                      <option value="phone">phone</option>
-                      <option value="email">email</option>
-                      <option value="github">github</option>
-                      <option value="twitter">twitter</option>
-                      <option value="stream">Stream</option>
-                    </Select>
-                    <Input flex={5}></Input>
+                <Box flex={4}>
+                  <Box mb={5}>
+                    <Text>Social Links</Text>
                   </Box>
+                  <small>Facebook</small>
+                  <Input
+                    flex={5}
+                    mb={5}
+                    value={this.state.facebook}
+                    onChange={(event) =>
+                      this.handleChangeFor(event, "facebook")
+                    }
+                  ></Input>
+                  <small>Twitter</small>
+                  <Input
+                    flex={5}
+                    mb={5}
+                    value={this.state.twitter}
+                    onChange={(event) => this.handleChangeFor(event, "twitter")}
+                  ></Input>
+                  <small>Github</small>
+                  <Input
+                    flex={5}
+                    mb={5}
+                    value={this.state.github}
+                    onChange={(event) => this.handleChangeFor(event, "github")}
+                  ></Input>
+                  <small>Personal Site</small>
+                  <Input
+                    flex={5}
+                    mb={5}
+                    value={this.state.personal_site}
+                    onChange={(event) =>
+                      this.handleChangeFor(event, "personal_site")
+                    }
+                  ></Input>
+                  <small>LinkedIn</small>
+                  <Input
+                    flex={5}
+                    mb={5}
+                    value={this.state.linkedin}
+                    onChange={(event) =>
+                      this.handleChangeFor(event, "linkedin")
+                    }
+                  ></Input>
+                  <small>Email</small>
+                  <Input
+                    type="email"
+                    flex={5}
+                    mb={5}
+                    value={this.state.email}
+                    onChange={(event) => this.handleChangeFor(event, "email")}
+                  ></Input>
+                  <small>Phone</small>
+                  <Input
+                    value={this.state.phone}
+                    onChange={(event) => this.handleChangeFor(event, "phone")}
+                  ></Input>
                 </Box>
               </Box>
               <Button

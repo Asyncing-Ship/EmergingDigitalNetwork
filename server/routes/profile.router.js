@@ -27,7 +27,7 @@ router.post("/", rejectUnauthenticated, (req, res) => {
 router.get("/", (req, res) => {
   const user_id = req.user.id;
   console.log("getting profile", req.user, user_id);
-  const queryText = `SELECT bio, users.first_name, users.last_name, avatar, user_id
+  const queryText = `SELECT bio,facebook,twitter, github, personal_site, linkedin, profile.email, phone, users.first_name, users.last_name, avatar, user_id
    FROM profile
    JOIN users on users.id = profile.user_id
    WHERE user_id = $1`;
@@ -78,10 +78,20 @@ router.get("/links", (req, res) => {
 router.put("/", rejectUnauthenticated, (req, res) => {
   if (req.user.id === req.body.id) {
     pool
-      .query(`UPDATE "profile" SET bio = $1 WHERE user_id=$2`, [
-        req.body.bio,
-        req.body.id,
-      ])
+      .query(
+        `UPDATE "profile" SET bio = $1, facebook = $2, twitter = $3, github = $4, personal_site = $5, linkedin = $6, email = $7, phone = $8  WHERE user_id=$9`,
+        [
+          req.body.bio,
+          req.body.facebook,
+          req.body.twitter,
+          req.body.github,
+          req.body.personal_site,
+          req.body.linkedin,
+          req.body.email,
+          req.body.phone,
+          req.body.id,
+        ]
+      )
       .then(() => {
         console.log("successfully edited your profile");
         res.send(202);
