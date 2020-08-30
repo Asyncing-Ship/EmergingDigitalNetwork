@@ -62,7 +62,14 @@ CREATE TABLE "post_comments" (
 CREATE TABLE "profile" (
 	"user_id" integer NOT NULL,
 	"avatar" varchar(255) NOT NULL,
-	"bio" varchar(2000) NOT NULL
+	"bio" varchar(2000) NOT NULL,
+	"facebook" varchar(250) DEFAULT '',
+	"twitter" varchar(250) DEFAULT '',
+	"github" varchar(250) DEFAULT '',
+	"personal_site" varchar(250) DEFAULT '',
+	"linkedin" varchar(250) DEFAULT '',
+	"email" varchar(250) DEFAULT '',
+	"phone" varchar(250) DEFAULT '',
 ) WITH (
   OIDS=FALSE
 );
