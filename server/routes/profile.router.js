@@ -27,7 +27,10 @@ router.post("/", rejectUnauthenticated, (req, res) => {
 router.get("/", (req, res) => {
   const user_id = req.user.id;
   console.log("getting profile", req.user, user_id);
-  const queryText = `SELECT * FROM profile WHERE user_id = $1`;
+  const queryText = `SELECT bio, users.first_name, users.last_name, avatar, user_id
+   FROM profile
+   JOIN users on users.id = profile.user_id
+   WHERE user_id = $1`;
   pool
     .query(queryText, [user_id])
     .then((result) => {

@@ -88,7 +88,7 @@ class Profile extends Component {
           {!this.state.editMode ? (
             <Box mb={8}>
               <Heading className="profile">
-                {user.first_name} {user.last_name}
+                {profileData.first_name} {profileData.last_name}
               </Heading>
               <Button
                 variantColor={VARIANT_COLOR}
