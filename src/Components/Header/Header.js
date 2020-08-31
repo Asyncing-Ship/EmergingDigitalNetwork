@@ -13,7 +13,7 @@ const Nav = (props) => (
       <div className="header">
         <Link to="/home">
           <h1 className="nav-title">
-            <img src={Logo} width={"100rem"} />
+            <img src={Logo} width={"80rem"} />
           </h1>
         </Link>
         <div className="nav-right">

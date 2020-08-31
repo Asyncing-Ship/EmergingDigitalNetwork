@@ -38,14 +38,27 @@
     transform: rotate(360deg);
   }
 }
-
-.content {
-  width: 40%;
-  margin: auto;
-  margin-top: 10%;
-  align-items: center;
-  text-align: center;
-  margin-bottom: 10%;
+@media (min-width: 1100px) {
+  .content {
+    width: 75%;
+    margin-right: 20%;
+    margin-left: 5%;
+    margin-top: 15rem;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 10%;
+  }
+}
+@media (max-width: 1100px) {
+  .content {
+    width: 90%;
+    margin-right: 5%;
+    margin-left: 5%;
+    margin-top: 15rem;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 10%;
+  }
 }
 
 p {

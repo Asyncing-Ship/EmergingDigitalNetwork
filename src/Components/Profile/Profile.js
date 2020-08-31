@@ -114,19 +114,12 @@ class Profile extends Component {
     }
     return (
       <div className="content">
-        <Box display="flexbox">
+        <Box display="flex">
           {!this.state.editMode ? (
-            <Box mb={8} flex={4}>
+            <Box mb={8} flex={3}>
               <Heading className="profile">
                 {profileData.first_name} {profileData.last_name}
               </Heading>
-              <Button
-                variantColor={VARIANT_COLOR}
-                mb={4}
-                onClick={this.editProfile}
-              >
-                Edit Profile
-              </Button>
               <p className="profile">
                 {profileData ? profileData.bio : "ERROR: COULD NOT GET BIO"}{" "}
               </p>
@@ -256,7 +249,11 @@ class Profile extends Component {
             profileData.phone) &&
             !this.state.editMode && (
               <Box flex={3}>
-                <Box>Social Links</Box>
+                <Box mb={5}>
+                  <b>
+                    <u>Social Links</u>
+                  </b>
+                </Box>
                 {profileData.facebook && (
                   <Box>Facebook: {profileData.facebook}</Box>
                 )}
@@ -275,6 +272,15 @@ class Profile extends Component {
               </Box>
             )}
         </Box>
+        {!this.state.editMode && (
+          <Button
+            variantColor={VARIANT_COLOR}
+            mb={4}
+            onClick={this.editProfile}
+          >
+            Edit Profile
+          </Button>
+        )}
         <hr></hr>
         <Heading my={8}>
           <u>Posts</u>
