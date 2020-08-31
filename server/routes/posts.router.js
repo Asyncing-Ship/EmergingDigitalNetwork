@@ -22,7 +22,7 @@ router.get("/", (req, res) => {
   pool
     .query(queryText)
     .then((result) => {
-      console.log(result);
+      console.log(result.rows);
       res.send(result.rows);
     })
     .catch((error) => {
@@ -88,7 +88,7 @@ router.put("/:id", rejectUnauthenticated, (req, res) => {
  */
 router.post("/comments", rejectUnauthenticated, (req, res) => {
   console.log("Adding post comment to the database");
-  console.log(req);
+  console.log(req.body, req.user);
 
   const post = req.body.id;
   const body = req.body.body;
@@ -99,7 +99,10 @@ router.post("/comments", rejectUnauthenticated, (req, res) => {
   pool
     .query(queryText, [user, body, post])
     .then(() => res.sendStatus(201))
-    .catch(() => res.sendStatus(500));
+    .catch((error) => {
+      console.log(error);
+      res.sendStatus(500);
+    });
 });
 
 router.get("/comments/:id", (req, res) => {

@@ -9,13 +9,32 @@ const {
 /**
  * Get all of the posts on the table
  */
-router.get("/", (req, res) => {
-  console.log("getting profile");
+router.post("/", rejectUnauthenticated, (req, res) => {
   const user_id = req.user.id;
-  const queryText = `SELECT * FROM profile WHERE user_id = $1`;
+  const queryText = `INSERT INTO profile(user_id, avatar, bio) VALUES ($1,$2,$3)`;
+  pool
+    .query(queryText, [user_id, "", "No Biography Yet"])
+    .then((result) => {
+      res.sendStatus(203);
+    })
+    .catch((error) => {
+      console.log(
+        "ERROR POSTING NEW PROFILE: profile.router.js LINE 14:",
+        error
+      );
+    });
+});
+router.get("/", (req, res) => {
+  const user_id = req.user.id;
+  console.log("getting profile", req.user, user_id);
+  const queryText = `SELECT bio,facebook,twitter, github, personal_site, linkedin, profile.email, phone, users.first_name, users.last_name, avatar, user_id
+   FROM profile
+   JOIN users on users.id = profile.user_id
+   WHERE user_id = $1`;
   pool
     .query(queryText, [user_id])
     .then((result) => {
+      console.log(result.rows);
       res.send(result.rows);
     })
     .catch((error) => {
@@ -30,8 +49,12 @@ router.get("/", (req, res) => {
 router.get("/posts", (req, res) => {
   console.log("Getting user posts from database");
   const user_id = req.user.id;
-  const queryText = `
-    SELECT * FROM posts WHERE user_id = $1 ORDER BY id DESC`;
+  const queryText = `SELECT users.first_name, users.last_name, users.email, posts.id, posts.post_title, posts.post_body, count(post_likes.user_id) as likes, posts.user_id FROM posts
+  JOIN users ON posts.user_id = users.id
+  LEFT JOIN post_likes ON post_likes.post_id = posts.id 
+  WHERE posts.user_id = $1 
+  GROUP BY users.first_name, users.last_name, users.email, posts.id
+  ORDER BY id DESC`;
   pool
     .query(queryText, [user_id])
     .then((result) => {
@@ -51,6 +74,35 @@ router.get("/links", (req, res) => {
       res.send(result.rows);
     })
     .catch((error) => console.log("Error getting user links", error));
+});
+router.put("/", rejectUnauthenticated, (req, res) => {
+  if (req.user.id === req.body.id) {
+    pool
+      .query(
+        `UPDATE "profile" SET bio = $1, facebook = $2, twitter = $3, github = $4, personal_site = $5, linkedin = $6, email = $7, phone = $8  WHERE user_id=$9`,
+        [
+          req.body.bio,
+          req.body.facebook,
+          req.body.twitter,
+          req.body.github,
+          req.body.personal_site,
+          req.body.linkedin,
+          req.body.email,
+          req.body.phone,
+          req.body.id,
+        ]
+      )
+      .then(() => {
+        console.log("successfully edited your profile");
+        res.send(202);
+      })
+      .catch((error) => {
+        console.log("ERROR in user router line 38:", error);
+        res.sendStatus(500);
+      });
+  } else {
+    res.sendStatus(403);
+  }
 });
 
 /**

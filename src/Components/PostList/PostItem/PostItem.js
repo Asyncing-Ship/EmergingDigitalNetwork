@@ -76,7 +76,12 @@ class PostItem extends Component {
     this.props.history.push("/");
   };
 
-  addPostComment = (event) => {};
+  addPostComment = async (comment) => {
+    if (this.props.postItem.post_body !== undefined) {
+      await Axios.post(`/api/posts/comments`, comment);
+      await this.updateComments();
+    }
+  };
 
   editPost = (event) => {};
 
@@ -129,7 +134,8 @@ class PostItem extends Component {
                 </Heading>
                 <Text>By</Text>
                 <Heading mb={2} as="h5" size="sm">
-                  {this.props.postItem.first_name}
+                  {this.props.postItem.first_name}{" "}
+                  {this.props.postItem.last_name}
                 </Heading>
                 <Text mb={8}>{this.props.postItem.post_body}</Text>
               </Box>
@@ -265,6 +271,7 @@ class PostItem extends Component {
                 <AddComment
                   postItem={this.props.postItem}
                   userID={this.props.user.id}
+                  addComment={this.addPostComment}
                 />
               </>
             ) : (
@@ -351,6 +358,7 @@ class PostItem extends Component {
                 <AddComment
                   postItem={this.props.postItem}
                   userID={this.props.user.id}
+                  addComment={this.addPostComment}
                 />
               </>
             )}
