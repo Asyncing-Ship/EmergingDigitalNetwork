@@ -114,9 +114,9 @@ class Profile extends Component {
     }
     return (
       <div className="content">
-        <div>
+        <Box display="flexbox">
           {!this.state.editMode ? (
-            <Box mb={8}>
+            <Box mb={8} flex={4}>
               <Heading className="profile">
                 {profileData.first_name} {profileData.last_name}
               </Heading>
@@ -132,7 +132,7 @@ class Profile extends Component {
               </p>
             </Box>
           ) : (
-            <Box mb={8}>
+            <Box mb={8} flex={4}>
               {" "}
               <Box display="flex">
                 <Box flex={4}>
@@ -247,24 +247,49 @@ class Profile extends Component {
               </Button>
             </Box>
           )}
-          <hr></hr>
-          <Heading my={8}>
-            <u>Posts</u>
-          </Heading>
-          {profileLinks.map((profileLink) => {
-            return (
-              <ProfileLink key={profileLink.id} profileLink={profileLink} />
-            );
-          })}
-          {profile.profilePosts[0] ? (
-            profile.profilePosts.map((postItem) => {
-              console.log(postItem);
-              return <PostItem key={postItem.id} postItem={postItem} />;
-            })
-          ) : (
-            <div>This User Has No Posts Yet</div>
-          )}
-        </div>
+          {(profileData.facebook ||
+            profileData.twitter ||
+            profileData.github ||
+            profileData.personal_site ||
+            profileData.linkedin ||
+            profileData.email ||
+            profileData.phone) &&
+            !this.state.editMode && (
+              <Box flex={3}>
+                <Box>Social Links</Box>
+                {profileData.facebook && (
+                  <Box>Facebook: {profileData.facebook}</Box>
+                )}
+                {profileData.twitter && (
+                  <Box>Twitter: {profileData.twitter}</Box>
+                )}
+                {profileData.github && <Box>Github: {profileData.github}</Box>}
+                {profileData.personal_site && (
+                  <Box>Persopnal Site: {profileData.personal_site}</Box>
+                )}
+                {profileData.linkedin && (
+                  <Box>LinkedIn: {profileData.linkedin}</Box>
+                )}
+                {profileData.email && <Box>Email: {profileData.email}</Box>}
+                {profileData.phone && <Box>Phone #: {profileData.phone}</Box>}
+              </Box>
+            )}
+        </Box>
+        <hr></hr>
+        <Heading my={8}>
+          <u>Posts</u>
+        </Heading>
+        {profileLinks.map((profileLink) => {
+          return <ProfileLink key={profileLink.id} profileLink={profileLink} />;
+        })}
+        {profile.profilePosts[0] ? (
+          profile.profilePosts.map((postItem) => {
+            console.log(postItem);
+            return <PostItem key={postItem.id} postItem={postItem} />;
+          })
+        ) : (
+          <div>This User Has No Posts Yet</div>
+        )}
       </div>
     );
   }
