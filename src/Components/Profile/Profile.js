@@ -113,158 +113,217 @@ class Profile extends Component {
       this.props.dispatch({ type: "ADD_PROFILE" });
     }
     return (
-      <div className="content">
-        <div>
+      <div className="content ">
+        <Box className="responsiveContainer">
           {!this.state.editMode ? (
-            <Box mb={8}>
+            <Box mb={8} className="responsive1">
               <Heading className="profile">
                 {profileData.first_name} {profileData.last_name}
               </Heading>
-              <Button
-                variantColor={VARIANT_COLOR}
-                mb={4}
-                onClick={this.editProfile}
-              >
-                Edit Profile
-              </Button>
               <p className="profile">
                 {profileData ? profileData.bio : "ERROR: COULD NOT GET BIO"}{" "}
               </p>
             </Box>
           ) : (
-            <Box mb={8}>
-              {" "}
-              <Box display="flex">
-                <Box flex={4}>
-                  <Box mb={5}>
-                    <Text>Personal Info</Text>
-                  </Box>
-                  <small>First Name</small>
-                  <Input
-                    className="profile"
-                    value={this.state.first_name}
-                    onChange={(event) =>
-                      this.handleChangeFor(event, "first_name")
-                    }
-                  />
-                  <small>Last Name</small>
-                  <Input
-                    className="profile"
-                    value={this.state.last_name}
-                    onChange={(event) =>
-                      this.handleChangeFor(event, "last_name")
-                    }
-                  />
-                  <small>Bio</small>
-                  <Textarea
-                    placeholder="Biography"
-                    className="profile"
-                    value={this.state.bio}
-                    onChange={(event) => this.handleChangeFor(event, "bio")}
-                  />
-                </Box>
-                <Box flex={1}></Box>
-                <Box flex={4}>
-                  <Box mb={5}>
-                    <Text>Social Links</Text>
-                  </Box>
-                  <small>Facebook</small>
-                  <Input
-                    flex={5}
-                    mb={5}
-                    value={this.state.facebook}
-                    onChange={(event) =>
-                      this.handleChangeFor(event, "facebook")
-                    }
-                  ></Input>
-                  <small>Twitter</small>
-                  <Input
-                    flex={5}
-                    mb={5}
-                    value={this.state.twitter}
-                    onChange={(event) => this.handleChangeFor(event, "twitter")}
-                  ></Input>
-                  <small>Github</small>
-                  <Input
-                    flex={5}
-                    mb={5}
-                    value={this.state.github}
-                    onChange={(event) => this.handleChangeFor(event, "github")}
-                  ></Input>
-                  <small>Personal Site</small>
-                  <Input
-                    flex={5}
-                    mb={5}
-                    value={this.state.personal_site}
-                    onChange={(event) =>
-                      this.handleChangeFor(event, "personal_site")
-                    }
-                  ></Input>
-                  <small>LinkedIn</small>
-                  <Input
-                    flex={5}
-                    mb={5}
-                    value={this.state.linkedin}
-                    onChange={(event) =>
-                      this.handleChangeFor(event, "linkedin")
-                    }
-                  ></Input>
-                  <small>Email</small>
-                  <Input
-                    type="email"
-                    flex={5}
-                    mb={5}
-                    value={this.state.email}
-                    onChange={(event) => this.handleChangeFor(event, "email")}
-                  ></Input>
-                  <small>Phone</small>
-                  <Input
-                    value={this.state.phone}
-                    onChange={(event) => this.handleChangeFor(event, "phone")}
-                  ></Input>
-                </Box>
+            <Box className="responsive1">
+              <Box mb={5}>
+                <Text>Personal Info</Text>
               </Box>
-              <Button
-                variantColor={VARIANT_COLOR}
-                mb={4}
-                onClick={() => this.saveEdits()}
-              >
-                Save
-              </Button>
-              <Button
-                variantColor={VARIANT_COLOR}
-                mb={4}
-                onClick={() =>
-                  this.setState({
-                    editMode: false,
-                    first_name: "",
-                    last_name: "",
-                    bio: "",
-                  })
-                }
-              >
-                Cancel
-              </Button>
+              <small>First Name</small>
+              <Input
+                className="profile"
+                value={this.state.first_name}
+                onChange={(event) => this.handleChangeFor(event, "first_name")}
+              />
+              <small>Last Name</small>
+              <Input
+                className="profile"
+                value={this.state.last_name}
+                onChange={(event) => this.handleChangeFor(event, "last_name")}
+              />
+              <small>Bio</small>
+              <Textarea
+                placeholder="Biography"
+                className="profile"
+                value={this.state.bio}
+                onChange={(event) => this.handleChangeFor(event, "bio")}
+              />
             </Box>
           )}
-          <hr></hr>
-          <Heading my={8}>
-            <u>Posts</u>
-          </Heading>
-          {profileLinks.map((profileLink) => {
-            return (
-              <ProfileLink key={profileLink.id} profileLink={profileLink} />
-            );
-          })}
-          {profile.profilePosts[0] ? (
-            profile.profilePosts.map((postItem) => {
-              console.log(postItem);
-              return <PostItem key={postItem.id} postItem={postItem} />;
-            })
-          ) : (
-            <div>This User Has No Posts Yet</div>
+          {this.state.editMode && (
+            <Box className="responsive2">
+              <Box mb={5}>
+                <Text>Social Links</Text>
+              </Box>
+              <small>Facebook</small>
+              <Input
+                mb={5}
+                value={this.state.facebook}
+                onChange={(event) => this.handleChangeFor(event, "facebook")}
+              ></Input>
+              <small>Twitter</small>
+              <Input
+                mb={5}
+                value={this.state.twitter}
+                onChange={(event) => this.handleChangeFor(event, "twitter")}
+              ></Input>
+              <small>Github</small>
+              <Input
+                mb={5}
+                value={this.state.github}
+                onChange={(event) => this.handleChangeFor(event, "github")}
+              ></Input>
+              <small>Personal Site</small>
+              <Input
+                mb={5}
+                value={this.state.personal_site}
+                onChange={(event) =>
+                  this.handleChangeFor(event, "personal_site")
+                }
+              ></Input>
+              <small>LinkedIn</small>
+              <Input
+                mb={5}
+                value={this.state.linkedin}
+                onChange={(event) => this.handleChangeFor(event, "linkedin")}
+              ></Input>
+              <small>Email</small>
+              <Input
+                type="email"
+                mb={5}
+                value={this.state.email}
+                onChange={(event) => this.handleChangeFor(event, "email")}
+              ></Input>
+              <small>Phone</small>
+              <Input
+                value={this.state.phone}
+                onChange={(event) => this.handleChangeFor(event, "phone")}
+              ></Input>
+            </Box>
           )}
-        </div>
+
+          {(profileData.facebook ||
+            profileData.twitter ||
+            profileData.github ||
+            profileData.personal_site ||
+            profileData.linkedin ||
+            profileData.email ||
+            profileData.phone) &&
+            !this.state.editMode && (
+              <Box className="responsive2">
+                <Box mb={5}>
+                  <b>
+                    <u>Social Links</u>
+                  </b>
+                </Box>
+                {profileData.facebook && (
+                  <ProfileLink
+                    profileLink={{
+                      profile_url: profileData.facebook,
+                      platform_name: "Facebook",
+                    }}
+                  />
+                )}
+                {profileData.twitter && (
+                  <ProfileLink
+                    profileLink={{
+                      profile_url: profileData.twitter,
+                      platform_name: "Twitter",
+                    }}
+                  />
+                )}
+                {profileData.github && (
+                  <ProfileLink
+                    profileLink={{
+                      profile_url: profileData.github,
+                      platform_name: "Github",
+                    }}
+                  />
+                )}
+                {profileData.personal_site && (
+                  <ProfileLink
+                    profileLink={{
+                      profile_url: profileData.personal_site,
+                      platform_name: "Personal Site",
+                    }}
+                  />
+                )}
+                {profileData.linkedin && (
+                  <ProfileLink
+                    profileLink={{
+                      profile_url: profileData.linkedin,
+                      platform_name: "LinkedIn",
+                    }}
+                  />
+                )}
+                {profileData.email && (
+                  <ProfileLink
+                    profileLink={{
+                      profile_url: profileData.email,
+                      platform_name: "Email",
+                    }}
+                  />
+                )}
+                {profileData.phone && (
+                  <ProfileLink
+                    profileLink={{
+                      profile_url: profileData.phone,
+                      platform_name: "Phone",
+                    }}
+                  />
+                )}
+              </Box>
+            )}
+        </Box>
+        {!this.state.editMode && (
+          <Button
+            variantColor={VARIANT_COLOR}
+            mb={4}
+            onClick={this.editProfile}
+          >
+            Edit Profile
+          </Button>
+        )}
+        {this.state.editMode && (
+          <Box>
+            <Button
+              variantColor={VARIANT_COLOR}
+              mb={4}
+              onClick={() => this.saveEdits()}
+            >
+              Save
+            </Button>
+            <Button
+              variantColor={VARIANT_COLOR}
+              mb={4}
+              onClick={() =>
+                this.setState({
+                  editMode: false,
+                  first_name: "",
+                  last_name: "",
+                  bio: "",
+                })
+              }
+            >
+              Cancel
+            </Button>
+          </Box>
+        )}
+        <hr></hr>
+        <Heading my={8}>
+          <u>Posts</u>
+        </Heading>
+        {profileLinks.map((profileLink) => {
+          return <ProfileLink key={profileLink.id} profileLink={profileLink} />;
+        })}
+        {profile.profilePosts[0] ? (
+          profile.profilePosts.map((postItem) => {
+            console.log(postItem);
+            return <PostItem key={postItem.id} postItem={postItem} />;
+          })
+        ) : (
+          <div>This User Has No Posts Yet</div>
+        )}
       </div>
     );
   }
