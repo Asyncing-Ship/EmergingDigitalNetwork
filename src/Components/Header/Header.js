@@ -33,9 +33,9 @@ const Nav = (props) => (
         {props.user.id && (
           <>
             <div className="nav-left">
-              <Link className="nav-link" to="/resources">
+              {/* <Link className="nav-link" to="/resources">
                 Resources
-              </Link>
+              </Link> */}
             </div>
             <div className="nav-right">
               <Link className="nav-link" to="/profile">

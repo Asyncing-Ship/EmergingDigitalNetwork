@@ -17,7 +17,7 @@ import {
 } from "@chakra-ui/core";
 import { VARIANT_COLOR } from "../ThemeSelector/ThemeSelector";
 import ProfileLink from "./ProfileLink/ProfileLink";
-import PhoneInput from "react-phone-number-input/input";
+// import PhoneInput from "react-phone-number-input/input";
 
 class Profile extends Component {
   state = {
